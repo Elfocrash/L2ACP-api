@@ -18,6 +18,7 @@ import com.elfocrash.l2acp.requests.L2ACPRequest;
 import com.elfocrash.l2acp.requests.LoginRequest;
 import com.elfocrash.l2acp.requests.RegisterRequest;
 import com.elfocrash.l2acp.requests.GetAccountCharsRequest;
+import com.elfocrash.l2acp.requests.GetPlayerInventoryRequest;
 
 import com.google.gson.JsonObject;
 
@@ -31,7 +32,8 @@ public enum L2ACPRequests
 {
 	LOGIN(1, LoginRequest::new),
 	REGISTER(2, RegisterRequest::new),
-	GETACCOUNTCHARS(3, GetAccountCharsRequest::new);
+	GETACCOUNTCHARS(3, GetAccountCharsRequest::new),
+	GETINVENTORY(4, GetPlayerInventoryRequest::new);
 	
 	public static final L2ACPRequests[] REQUESTS;
 	
