@@ -9,7 +9,6 @@ import java.net.InetSocketAddress;
 import java.util.stream.Collectors;
 
 import com.elfocrash.l2acp.requests.L2ACPRequest;
-import com.elfocrash.l2acp.responses.L2ACPResponse;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -19,7 +18,6 @@ import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 
 public class L2ACPServer {
-
 	
 	final String apiKey = "elfocrash";
 	

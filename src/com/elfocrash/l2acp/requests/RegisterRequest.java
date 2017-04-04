@@ -54,7 +54,6 @@ public class RegisterRequest extends L2ACPRequest
 		}
 		catch (SQLException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return new L2ACPResponse(500, "Unsuccessful registration");	
 		}

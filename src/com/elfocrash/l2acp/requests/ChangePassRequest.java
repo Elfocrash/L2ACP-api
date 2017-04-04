@@ -14,30 +14,29 @@
  */
 package com.elfocrash.l2acp.requests;
 
-import com.elfocrash.l2acp.responses.L2ACPResponse;
-import com.google.gson.JsonObject;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.elfocrash.l2acp.responses.L2ACPResponse;
+import com.google.gson.JsonObject;
+
 import net.sf.l2j.L2DatabaseFactory;
 
-/**
- * @author Elfocrash
- *
- */
-public class LoginRequest extends L2ACPRequest
+public class ChangePassRequest extends L2ACPRequest
 {
 	private String Username;
 	
-	private String Password;
+	private String CurrentPassword;
+	
+	private String NewPassword;
 
 	@Override
 	public L2ACPResponse getResponse()
 	{
-		String query = "SELECT login, password, access_level, lastServer FROM accounts WHERE login=?";
+		String query = "SELECT login, password FROM accounts WHERE login=?";
+		boolean validPass = false;
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection(); PreparedStatement ps = con.prepareStatement(query))
 		{
 			ps.setString(1, Username);
@@ -47,20 +46,26 @@ public class LoginRequest extends L2ACPRequest
 				{
 					String pass = rset.getString("password");
 					
-					if(pass.equals(Password))
-						return new L2ACPResponse(200, "Successful login");
-					
+					validPass = pass.equals(CurrentPassword);					
 				}
 			}
+			
+			if(validPass){
+				try(PreparedStatement ps2 = con.prepareStatement("update accounts set password=? where login=?")){
+					ps2.setString(1, NewPassword);
+					ps2.setString(2, Username);
+					ps2.executeUpdate();
+					ps2.clearParameters();
+				}
+				return new L2ACPResponse(200, "Successful update");
+			}
+			return new L2ACPResponse(500, "Unsuccessful update");			
 		}
 		catch (SQLException e)
 		{
 			e.printStackTrace();
-			return new L2ACPResponse(500, "Unsuccessful login");
+			return new L2ACPResponse(500, "Unsuccessful update");
 		}
-		
-		
-		return new L2ACPResponse(500, "Unsuccessful login");
 	}
 	
 	@Override
@@ -68,6 +73,7 @@ public class LoginRequest extends L2ACPRequest
 		super.setContent(content);
 		
 		Username = content.get("Username").getAsString();
-		Password = content.get("Password").getAsString();
+		CurrentPassword = content.get("CurrentPassword").getAsString();
+		NewPassword = content.get("NewPassword").getAsString();
 	}
 }
