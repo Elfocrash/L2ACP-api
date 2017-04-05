@@ -7,7 +7,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.elfocrash.l2acp.models.InventoryInfo;
+import com.elfocrash.l2acp.models.PlayerInfo;
 import com.elfocrash.l2acp.responses.GetAccountCharsResponse;
+import com.elfocrash.l2acp.responses.GetPlayerInfoResponse;
 import com.elfocrash.l2acp.responses.GetPlayerInventoryResponse;
 import com.elfocrash.l2acp.responses.L2ACPResponse;
 import com.elfocrash.l2acp.util.Helpers;
@@ -18,7 +20,7 @@ import net.sf.l2j.gameserver.model.World;
 import net.sf.l2j.gameserver.model.actor.instance.L2PcInstance;
 import net.sf.l2j.gameserver.model.item.instance.ItemInstance;
 
-public class GetPlayerInventoryRequest extends L2ACPRequest {
+public class GetPlayerInfoRequest extends L2ACPRequest {
 
 	private String Username;
 	
@@ -26,13 +28,22 @@ public class GetPlayerInventoryRequest extends L2ACPRequest {
 	public L2ACPResponse getResponse() {
 		L2PcInstance player = World.getInstance().getPlayer(Username);
 		if(player == null){
-			player = L2PcInstance.restore( new Helpers().getPlayerIdByName(Username));					
+			player = L2PcInstance.restore(new Helpers().getPlayerIdByName(Username));					
 		}
-		ArrayList<InventoryInfo> invInfo = new ArrayList<>();
-		for(ItemInstance item : player.getInventory().getItems()){
-			invInfo.add(new InventoryInfo(item.getObjectId(), item.getItemId(),item.getCount(),item.isEquipped(),item.getEnchantLevel()));
-		}
-		return new GetPlayerInventoryResponse(200,"Success", invInfo.toArray(new InventoryInfo[invInfo.size()]));
+		PlayerInfo playerInfo = new PlayerInfo();
+		playerInfo.Name = player.getName();
+		playerInfo.Title = player.getTitle();
+		playerInfo.Level = player.getLevel();
+		playerInfo.Pvp = player.getPvpKills();
+		playerInfo.Pk = player.getPkKills();
+		playerInfo.Race = player.getClassIndex();
+		playerInfo.Sex = player.getAppearance().getSex().ordinal();
+		playerInfo.ClanName = player.getClan() != null ? player.getClan().getName() : "No clan";
+		playerInfo.AllyName = player.getClan() != null && player.getClan().getAllyId() != -1 ? player.getClan().getAllyName() : "No ally";
+		playerInfo.Hero = player.isHero();
+		playerInfo.Nobless = player.isNoble();
+		playerInfo.Time = player.getUptime();
+		return new GetPlayerInfoResponse(200,"Success", playerInfo);
 	}
 	
 	
