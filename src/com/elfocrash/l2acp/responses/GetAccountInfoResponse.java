@@ -18,14 +18,15 @@ package com.elfocrash.l2acp.responses;
  * @author Elfocrash
  *
  */
-public class GetAccountCharsResponse extends L2ACPResponse
+public class GetAccountInfoResponse extends L2ACPResponse
 {
 	private String[] AccountNames; 
+	private int DonatePoints;
 	
-	public GetAccountCharsResponse(int code, String message, String[] accNames)
+	public GetAccountInfoResponse(int code, String message, String[] accNames, int donate)
 	{
 		super(code, message);
 		AccountNames = accNames;
-		
+		DonatePoints = donate;
 	}
 }

@@ -28,10 +28,11 @@ public enum L2ACPRequests
 {
 	LOGIN(1, LoginRequest::new),
 	REGISTER(2, RegisterRequest::new),
-	GETACCOUNTCHARS(3, GetAccountCharsRequest::new),
+	GETACCOUNTINFO(3, GetAccountInfoRequest::new),
 	GETINVENTORY(4, GetPlayerInventoryRequest::new),
 	GETPLAYERINFO(5, GetPlayerInfoRequest::new),
-	ENCHANTITEM(6, EnchantItemRequest::new);
+	ENCHANTITEM(6, EnchantItemRequest::new),
+	DONATEREQUEST(7, DonateRequest::new);
 	
 	public static final L2ACPRequests[] REQUESTS;
 	

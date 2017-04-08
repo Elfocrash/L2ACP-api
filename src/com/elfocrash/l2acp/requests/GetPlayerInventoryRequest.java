@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.elfocrash.l2acp.models.InventoryInfo;
-import com.elfocrash.l2acp.responses.GetAccountCharsResponse;
+import com.elfocrash.l2acp.responses.GetAccountInfoResponse;
 import com.elfocrash.l2acp.responses.GetPlayerInventoryResponse;
 import com.elfocrash.l2acp.responses.L2ACPResponse;
 import com.elfocrash.l2acp.util.Helpers;
