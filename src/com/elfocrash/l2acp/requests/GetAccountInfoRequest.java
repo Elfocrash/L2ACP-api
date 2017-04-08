@@ -39,8 +39,6 @@ public class GetAccountInfoRequest extends L2ACPRequest
 	@Override
 	public L2ACPResponse getResponse()
 	{
-		//"SELECT account_name, obj_Id, char_name, level, maxHp, curHp, maxMp, curMp, face, hairStyle, hairColor, sex, heading, x, y, z, exp, sp, karma, pvpkills, pkkills, clanid, race, classid, deletetime, cancraft, title, accesslevel, online, char_slot, lastAccess, base_class FROM characters WHERE account_name=?"
-		
 		ArrayList<String> chars = new ArrayList<>();
 		int donatePoints = 0;
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection())
