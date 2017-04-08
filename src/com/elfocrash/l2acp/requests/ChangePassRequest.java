@@ -59,12 +59,12 @@ public class ChangePassRequest extends L2ACPRequest
 				}
 				return new L2ACPResponse(200, "Successful update");
 			}
-			return new L2ACPResponse(500, "Unsuccessful update");			
+			return new L2ACPResponse(500, "Unsuccessful update. Invalid password.");			
 		}
 		catch (SQLException e)
 		{
 			e.printStackTrace();
-			return new L2ACPResponse(500, "Unsuccessful update");
+			return new L2ACPResponse(500, "Unsuccessful update. Database error.");
 		}
 	}
 	
