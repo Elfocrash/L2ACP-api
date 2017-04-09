@@ -14,21 +14,24 @@
  */
 package com.elfocrash.l2acp.responses;
 
+import com.elfocrash.l2acp.models.InventoryInfo;
+import com.elfocrash.l2acp.models.TopPlayer;
+
 /**
  * @author Elfocrash
  *
  */
-public class GetAccountInfoResponse extends L2ACPResponse
+public class GetStatsResponse extends L2ACPResponse
 {
-	private String[] AccountNames; 
-	private int DonatePoints;
-	private int AccessLevel;
+	private TopPlayer[] TopPvp; 
+	private TopPlayer[] TopPk;
+	private TopPlayer[] TopOnline;
 	
-	public GetAccountInfoResponse(int code, String message, String[] accNames, int donate, int accessLevel)
+	public GetStatsResponse(int code, String message, TopPlayer[] topPvp, TopPlayer[] topPk, TopPlayer[] topOnline)
 	{
 		super(code, message);
-		AccountNames = accNames;
-		DonatePoints = donate;
-		AccessLevel = accessLevel;
+		TopPvp = topPvp;
+		TopPk = topPk;
+		TopOnline = topOnline;
 	}
 }

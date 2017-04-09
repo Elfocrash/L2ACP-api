@@ -8,6 +8,7 @@ import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.util.stream.Collectors;
 
+import com.elfocrash.l2acp.crypto.AesCrypto;
 import com.elfocrash.l2acp.requests.L2ACPRequest;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -45,6 +46,7 @@ public class L2ACPServer {
         public void handle(HttpExchange t) {
         	try {
             String requestBody = read(t.getRequestBody());
+            requestBody = AesCrypto.decryptRequest(requestBody);
             JsonElement jelement = new JsonParser().parse(requestBody);
             JsonObject  jobject = jelement.getAsJsonObject();
             	         
@@ -57,7 +59,7 @@ public class L2ACPServer {
                 Gson gson = new Gson();
                 String jsonInString = gson.toJson(request.getResponse());
                 String jsonResponse = jsonInString.toString();
-                
+                jsonResponse = AesCrypto.encryptRequest(jsonResponse);
                 t.sendResponseHeaders(200, jsonResponse.length());
                 OutputStream os = t.getResponseBody();
                 os.write(jsonResponse.getBytes());

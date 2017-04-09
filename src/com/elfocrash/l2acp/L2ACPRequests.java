@@ -35,7 +35,8 @@ public enum L2ACPRequests
 	DONATEREQUEST(7, DonateRequest::new),
 	CHANGEPASS(8, ChangePassRequest::new),
 	BUYITEM(9, BuyItemRequest::new),
-	GETBUYLIST(10, GetBuyListRequest::new);
+	GETBUYLIST(10, GetBuyListRequest::new),
+	GETTOPLIST(11, GetStatsRequest::new);
 	
 	public static final L2ACPRequests[] REQUESTS;
 	
