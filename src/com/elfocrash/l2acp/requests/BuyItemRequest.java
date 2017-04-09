@@ -49,7 +49,7 @@ public class BuyItemRequest extends L2ACPRequest
 	@Override
 	public L2ACPResponse getResponse()
 	{
-		ArrayList<BuyListItem> items = new Helpers().getDonateItemList();
+		ArrayList<BuyListItem> items = Helpers.getDonateItemList();
 		boolean valid = false;
 		for(BuyListItem listItem : items){
 			if(listItem.ItemId == ItemId && listItem.ItemCount == ItemCount && listItem.Price == Price && listItem.Enchant == Enchant)
@@ -61,10 +61,10 @@ public class BuyItemRequest extends L2ACPRequest
 		
 		L2PcInstance player = World.getInstance().getPlayer(Username);
 		if(player == null){
-			player = L2PcInstance.restore( new Helpers().getPlayerIdByName(Username));					
+			player = L2PcInstance.restore(Helpers.getPlayerIdByName(Username));					
 		}
 		
-		if(new Helpers().getDonatePoints(AccountName) > Price){
+		if(Helpers.getDonatePoints(AccountName) > Price){
 			if(Enchant > 0){
 				ItemInstance item = new ItemInstance(IdFactory.getInstance().getNextId(), ItemId);
 			
@@ -73,19 +73,7 @@ public class BuyItemRequest extends L2ACPRequest
 			}else if(ItemCount > 0){
 				player.addItem("Buy item", ItemId, ItemCount, player, true);
 			}
-			try (Connection con = L2DatabaseFactory.getInstance().getConnection();
-					PreparedStatement ps = con.prepareStatement("update accounts set donatepoints=(donatepoints - ?) WHERE login=?"))
-			{
-				ps.setInt(1, Price);
-				ps.setString(2, AccountName);
-				ps.execute();
-			}
-			catch (SQLException e)
-			{
-				e.printStackTrace();
-				return new L2ACPResponse(500, "Unsuccessful retrieval");
-			}
-			
+			Helpers.removeDonatePoints(AccountName, Price);
 			return new L2ACPResponse(200, "Success");
 		}	
 		return new L2ACPResponse(500, "Not enough donate points");

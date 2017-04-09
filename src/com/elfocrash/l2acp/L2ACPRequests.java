@@ -36,7 +36,12 @@ public enum L2ACPRequests
 	CHANGEPASS(8, ChangePassRequest::new),
 	BUYITEM(9, BuyItemRequest::new),
 	GETBUYLIST(10, GetBuyListRequest::new),
-	GETTOPLIST(11, GetStatsRequest::new);
+	GETTOPLIST(11, GetStatsRequest::new),
+	GETDONATESERVICES(12, GetDonateServicesRequest::new),
+	RENAMEPLAYER(13, RenamePlayerRequest::new),
+	CHANGESEX(14, ChangeSexRequest::new),
+	RESETPK(15, ResetPkRequest::new),
+	SETNOBLESS(16, SetNoblessRequest::new);
 	
 	public static final L2ACPRequests[] REQUESTS;
 	
