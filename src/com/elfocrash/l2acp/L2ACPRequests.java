@@ -41,7 +41,9 @@ public enum L2ACPRequests
 	RENAMEPLAYER(13, RenamePlayerRequest::new),
 	CHANGESEX(14, ChangeSexRequest::new),
 	RESETPK(15, ResetPkRequest::new),
-	SETNOBLESS(16, SetNoblessRequest::new);
+	SETNOBLESS(16, SetNoblessRequest::new),
+	GETALLPLAYERS(17, GetAllPlayerNamesRequest::new),
+	GIVEITEM(18, GiveItemRequest::new);
 	
 	public static final L2ACPRequests[] REQUESTS;
 	

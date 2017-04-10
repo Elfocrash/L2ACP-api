@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import com.elfocrash.l2acp.models.BuyListItem;
 import com.elfocrash.l2acp.models.DonateService;
+import com.elfocrash.l2acp.models.PlayerInfo;
 import com.elfocrash.l2acp.responses.L2ACPResponse;
 
 import net.sf.l2j.L2DatabaseFactory;
@@ -116,6 +117,31 @@ public class Helpers {
 			e.printStackTrace();
 		}
 		return invInfo;
+	}
+	
+public static ArrayList<String> getAllPlayerNames(){
+		
+		ArrayList<String> names = new ArrayList<String>(); 
+		try (Connection con = L2DatabaseFactory.getInstance().getConnection())
+		{
+			PreparedStatement statement = con.prepareStatement("SELECT char_name FROM characters");
+			ResultSet nameList = statement.executeQuery();
+			
+			while (nameList.next())// fills the package
+			{
+				String name = nameList.getString("char_name");
+				names.add(name);
+			}
+			
+			nameList.close();
+			statement.close();			
+		}
+		catch (SQLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return names;
 	}
 	
 	public static ArrayList<DonateService> getDonateServices(){
