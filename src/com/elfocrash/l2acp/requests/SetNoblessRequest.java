@@ -38,6 +38,10 @@ public class SetNoblessRequest extends L2ACPRequest {
 			return new L2ACPResponse(500, "Not enough donate points.");
 		}
 		
+		if(player.isNoble()){
+			return new L2ACPResponse(500, "This player is already nobless.");
+		}
+		
 		Helpers.removeDonatePoints(accName, price);
 		
 		player.setNoble(true, true);

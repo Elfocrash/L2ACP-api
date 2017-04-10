@@ -38,6 +38,10 @@ public class ResetPkRequest extends L2ACPRequest {
 			return new L2ACPResponse(500, "Not enough donate points.");
 		}
 		
+		if(player.getPkKills() == 0){
+			return new L2ACPResponse(500, "Your PKs are already zero.");
+		}
+		
 		Helpers.removeDonatePoints(accName, price);
 		
 		player.setPkKills(0);
