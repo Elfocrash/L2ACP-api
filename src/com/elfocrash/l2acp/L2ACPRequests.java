@@ -43,7 +43,8 @@ public enum L2ACPRequests
 	RESETPK(15, ResetPkRequest::new),
 	SETNOBLESS(16, SetNoblessRequest::new),
 	GETALLPLAYERS(17, GetAllPlayerNamesRequest::new),
-	GIVEITEM(18, GiveItemRequest::new);
+	GIVEITEM(18, GiveItemRequest::new),
+	ANNOUNCE(19, AnnounceRequest::new);
 	
 	public static final L2ACPRequests[] REQUESTS;
 	
