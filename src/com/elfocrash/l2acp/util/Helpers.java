@@ -13,7 +13,14 @@ import com.elfocrash.l2acp.responses.L2ACPResponse;
 
 import net.sf.l2j.Config;
 import net.sf.l2j.L2DatabaseFactory;
+import net.sf.l2j.gameserver.datatables.NpcTable;
+import net.sf.l2j.gameserver.datatables.SpawnTable;
+import net.sf.l2j.gameserver.instancemanager.RaidBossSpawnManager;
+import net.sf.l2j.gameserver.model.L2Object;
+import net.sf.l2j.gameserver.model.L2Spawn;
 import net.sf.l2j.gameserver.model.actor.instance.L2PcInstance;
+import net.sf.l2j.gameserver.model.actor.template.NpcTemplate;
+import net.sf.l2j.gameserver.network.SystemMessageId;
 
 public class Helpers {
 	public static int getPlayerIdByName(String name){
@@ -48,6 +55,47 @@ public class Helpers {
 		catch (SQLException e)
 		{
 			e.printStackTrace();
+		}
+	}
+	
+	public static void spawn(int npcId,int x, int y, int z, int respawnTime, boolean permanent)
+	{		
+		NpcTemplate template = NpcTable.getInstance().getTemplate(npcId);
+
+		
+		try
+		{
+			L2Spawn spawn = new L2Spawn(template);
+			spawn.setLoc(x, y, z, 0);
+			spawn.setRespawnDelay(respawnTime);
+			
+			if (RaidBossSpawnManager.getInstance().getValidTemplate(spawn.getNpcId()) != null)
+			{
+				if (RaidBossSpawnManager.getInstance().isDefined(spawn.getNpcId()))
+				{
+					//activeChar.sendMessage("You cannot spawn another instance of " + template.getName() + ".");
+					return;
+				}
+				
+				spawn.setRespawnMinDelay(43200);
+				spawn.setRespawnMaxDelay(129600);
+				RaidBossSpawnManager.getInstance().addNewSpawn(spawn, 0, 0, 0, permanent);
+			}
+			else
+			{
+				SpawnTable.getInstance().addNewSpawn(spawn, permanent);
+				spawn.doSpawn(false);
+				if (permanent)
+					spawn.setRespawnState(true);
+			}
+			
+			if (!permanent)
+				spawn.setRespawnState(false);
+			
+			
+		}
+		catch (Exception e)
+		{
 		}
 	}
 	
