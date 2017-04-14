@@ -44,7 +44,9 @@ public enum L2ACPRequests
 	SETNOBLESS(16, SetNoblessRequest::new),
 	GETALLPLAYERS(17, GetAllPlayerNamesRequest::new),
 	GIVEITEM(18, GiveItemRequest::new),
-	ANNOUNCE(19, AnnounceRequest::new);
+	ANNOUNCE(19, AnnounceRequest::new),
+	PUNISH(20, PunishRequest::new),
+	GETMAPDATA(21, GetAllOnlinePlayersForMapRequest::new);
 	
 	public static final L2ACPRequests[] REQUESTS;
 	
