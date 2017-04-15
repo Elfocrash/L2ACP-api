@@ -24,7 +24,7 @@ public class GetBuyListRequest extends L2ACPRequest {
 
 	@Override
 	public L2ACPResponse getResponse() {
-		ArrayList<BuyListItem> invInfo = new Helpers().getDonateItemList();
+		ArrayList<BuyListItem> invInfo = Helpers.getDonateItemList();
 		
 		return new GetBuyListResponse(200,"Success", invInfo.toArray(new BuyListItem[invInfo.size()]));
 	}

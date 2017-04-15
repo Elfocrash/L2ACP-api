@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.elfocrash.l2acp.models.AdminDonateListViewmodel;
 import com.elfocrash.l2acp.models.BuyListItem;
 import com.elfocrash.l2acp.models.DonateService;
 import com.elfocrash.l2acp.models.PlayerInfo;
@@ -51,6 +52,39 @@ public class Helpers {
 			ps.setInt(1, price);
 			ps.setString(2, accountName);
 			ps.execute();
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	public static void deleteAllDonateItems(){
+		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
+				PreparedStatement ps = con.prepareStatement("delete from donateitems"))
+		{
+			ps.execute();
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	public static void addDonateItems(AdminDonateListViewmodel[] items){
+		try (Connection con = L2DatabaseFactory.getInstance().getConnection();)
+		{
+			con.setAutoCommit(false);
+			PreparedStatement ps = con.prepareStatement("insert into donateitems (itemId,itemCount,enchant,price) values (?,?,?,?)");
+			for(AdminDonateListViewmodel item : items){
+				ps.setInt(1, item.itemid);
+				ps.setInt(2, item.itemcount);
+				ps.setInt(3, item.itemenchant);
+				ps.setInt(4, item.itemprice);
+				ps.addBatch();
+			}
+			ps.executeBatch();
+			con.commit();
 		}
 		catch (SQLException e)
 		{

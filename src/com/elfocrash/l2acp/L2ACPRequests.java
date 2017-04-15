@@ -47,7 +47,8 @@ public enum L2ACPRequests
 	ANNOUNCE(19, AnnounceRequest::new),
 	PUNISH(20, PunishRequest::new),
 	GETMAPDATA(21, GetAllOnlinePlayersForMapRequest::new),
-	SPAWNNPC(22, SpawnNpcRequest::new);
+	SPAWNNPC(22, SpawnNpcRequest::new),
+	SETDONATELIST(23, SetDonateListRequest::new);
 	
 	public static final L2ACPRequests[] REQUESTS;
 	
