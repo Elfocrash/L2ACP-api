@@ -18,6 +18,7 @@ import com.google.gson.JsonObject;
 import net.sf.l2j.L2DatabaseFactory;
 import net.sf.l2j.gameserver.model.World;
 import net.sf.l2j.gameserver.model.actor.instance.L2PcInstance;
+import net.sf.l2j.gameserver.model.base.ClassId;
 import net.sf.l2j.gameserver.model.item.instance.ItemInstance;
 
 public class GetPlayerInfoRequest extends L2ACPRequest {
@@ -36,7 +37,11 @@ public class GetPlayerInfoRequest extends L2ACPRequest {
 		playerInfo.Level = player.getLevel();
 		playerInfo.Pvp = player.getPvpKills();
 		playerInfo.Pk = player.getPkKills();
-		playerInfo.Race = player.getClassIndex();
+		ClassId classId = player.getClassId();
+		while(classId.getParent() != null){
+			classId = classId.getParent();
+		}
+		playerInfo.Race = classId.getId();
 		playerInfo.Sex = player.getAppearance().getSex().ordinal();
 		playerInfo.ClanName = player.getClan() != null ? player.getClan().getName() : "No clan";
 		playerInfo.AllyName = player.getClan() != null && player.getClan().getAllyId() != -1 ? player.getClan().getAllyName() : "No ally";
