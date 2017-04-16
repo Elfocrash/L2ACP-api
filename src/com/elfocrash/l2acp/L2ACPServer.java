@@ -17,10 +17,12 @@ import com.google.gson.JsonParser;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
+import net.sf.l2j.gameserver.Shutdown;
 
 public class L2ACPServer {
 	
 	final String apiKey = "elfocrash";
+	public Shutdown serverShutdown = null;
 	
 	public static void main(String[] args) throws Exception
 	{
