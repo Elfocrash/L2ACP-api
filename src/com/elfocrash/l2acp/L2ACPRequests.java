@@ -49,7 +49,9 @@ public enum L2ACPRequests
 	GETMAPDATA(21, GetAllOnlinePlayersForMapRequest::new),
 	SPAWNNPC(22, SpawnNpcRequest::new),
 	SETDONATELIST(23, SetDonateListRequest::new),
-	RESTARTSERVER(24, RestartServerRequest::new);
+	RESTARTSERVER(24, RestartServerRequest::new),
+	LUCKYWHEELSPINREQUEST(25, LuckyWheelSpinRequest::new),
+	LUCKYWHEELLISTREQUEST(26, LuckyWheelListRequest::new);
 	
 	public static final L2ACPRequests[] REQUESTS;
 	

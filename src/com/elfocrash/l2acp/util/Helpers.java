@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import com.elfocrash.l2acp.models.AdminDonateListViewmodel;
 import com.elfocrash.l2acp.models.BuyListItem;
 import com.elfocrash.l2acp.models.DonateService;
+import com.elfocrash.l2acp.models.LuckyWheelItem;
 import com.elfocrash.l2acp.models.PlayerInfo;
 import com.elfocrash.l2acp.responses.L2ACPResponse;
 
@@ -190,6 +191,34 @@ public class Helpers {
 				int enchant = itemList.getInt("enchant");
 				int price = itemList.getInt("price");
 				invInfo.add(new BuyListItem(itemId,itemCount,enchant,price));
+			}
+			
+			itemList.close();
+			statement.close();			
+		}
+		catch (SQLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return invInfo;
+	}
+	
+	public static ArrayList<LuckyWheelItem> getLuckyWheelList(){
+		
+		ArrayList<LuckyWheelItem> invInfo = new ArrayList<LuckyWheelItem>(); 
+		try (Connection con = L2DatabaseFactory.getInstance().getConnection())
+		{
+			PreparedStatement statement = con.prepareStatement("SELECT itemId,itemCount,enchant,chance FROM luckywheelitems");
+			ResultSet itemList = statement.executeQuery();
+			
+			while (itemList.next())// fills the package
+			{
+				int itemId = itemList.getInt("itemid");
+				int itemCount = itemList.getInt("itemcount");
+				int enchant = itemList.getInt("enchant");
+				double chance = itemList.getDouble("chance");
+				invInfo.add(new LuckyWheelItem(itemId,itemCount,enchant,chance));
 			}
 			
 			itemList.close();
