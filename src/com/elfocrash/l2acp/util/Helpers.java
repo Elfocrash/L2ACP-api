@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.elfocrash.l2acp.models.AdminDonateListViewmodel;
+import com.elfocrash.l2acp.models.AnalyticsPlayerData;
 import com.elfocrash.l2acp.models.BuyListItem;
 import com.elfocrash.l2acp.models.DonateService;
 import com.elfocrash.l2acp.models.LuckyWheelItem;
@@ -20,6 +21,7 @@ import net.sf.l2j.gameserver.datatables.SpawnTable;
 import net.sf.l2j.gameserver.instancemanager.RaidBossSpawnManager;
 import net.sf.l2j.gameserver.model.L2Object;
 import net.sf.l2j.gameserver.model.L2Spawn;
+import net.sf.l2j.gameserver.model.World;
 import net.sf.l2j.gameserver.model.actor.instance.L2PcInstance;
 import net.sf.l2j.gameserver.model.actor.template.NpcTemplate;
 import net.sf.l2j.gameserver.network.SystemMessageId;
@@ -62,7 +64,7 @@ public class Helpers {
 	
 	public static void deleteAllDonateItems(){
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
-				PreparedStatement ps = con.prepareStatement("delete from donateitems"))
+				PreparedStatement ps = con.prepareStatement("delete from l2acp_donateitems"))
 		{
 			ps.execute();
 		}
@@ -76,7 +78,7 @@ public class Helpers {
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection();)
 		{
 			con.setAutoCommit(false);
-			PreparedStatement ps = con.prepareStatement("insert into donateitems (itemId,itemCount,enchant,price) values (?,?,?,?)");
+			PreparedStatement ps = con.prepareStatement("insert into l2acp_donateitems (itemId,itemCount,enchant,price) values (?,?,?,?)");
 			for(AdminDonateListViewmodel item : items){
 				ps.setInt(1, item.itemid);
 				ps.setInt(2, item.itemcount);
@@ -86,6 +88,21 @@ public class Helpers {
 			}
 			ps.executeBatch();
 			con.commit();
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	public static void recordOnlinePlayersCount(){
+		try (Connection con = L2DatabaseFactory.getInstance().getConnection();)
+		{
+			PreparedStatement ps = con.prepareStatement("insert into l2acp_onlineanalytics (playercount,recordedtime) values (?,?)");
+			int count = World.getInstance().getPlayers().size();
+			ps.setInt(1, count);
+			ps.setLong(2, System.currentTimeMillis());
+			ps.execute();
 		}
 		catch (SQLException e)
 		{
@@ -181,7 +198,7 @@ public class Helpers {
 		ArrayList<BuyListItem> invInfo = new ArrayList<BuyListItem>(); 
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection())
 		{
-			PreparedStatement statement = con.prepareStatement("SELECT itemId,itemCount,enchant,price FROM donateitems");
+			PreparedStatement statement = con.prepareStatement("SELECT itemId,itemCount,enchant,price FROM l2acp_donateitems");
 			ResultSet itemList = statement.executeQuery();
 			
 			while (itemList.next())// fills the package
@@ -204,12 +221,40 @@ public class Helpers {
 		return invInfo;
 	}
 	
+	public static ArrayList<AnalyticsPlayerData> getTopAnalyticsPlayersData(int limit){
+		
+		ArrayList<AnalyticsPlayerData> invInfo = new ArrayList<AnalyticsPlayerData>(); 
+		try (Connection con = L2DatabaseFactory.getInstance().getConnection())
+		{
+			PreparedStatement statement = con.prepareStatement("SELECT playercount,recordedtime FROM l2acp_onlineanalytics order by recordedtime desc limit ?");
+			statement.setInt(1, limit);
+			
+			ResultSet itemList = statement.executeQuery();
+			
+			while (itemList.next())// fills the package
+			{
+				int count = itemList.getInt("playercount");
+				long time = itemList.getLong("recordedtime");
+				invInfo.add(new AnalyticsPlayerData(count,time));
+			}
+			
+			itemList.close();
+			statement.close();			
+		}
+		catch (SQLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return invInfo;
+	}
+	
 	public static ArrayList<LuckyWheelItem> getLuckyWheelList(){
 		
 		ArrayList<LuckyWheelItem> invInfo = new ArrayList<LuckyWheelItem>(); 
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection())
 		{
-			PreparedStatement statement = con.prepareStatement("SELECT itemId,itemCount,enchant,chance FROM luckywheelitems");
+			PreparedStatement statement = con.prepareStatement("SELECT itemId,itemCount,enchant,chance FROM l2acp_luckywheelitems");
 			ResultSet itemList = statement.executeQuery();
 			
 			while (itemList.next())// fills the package
@@ -367,7 +412,7 @@ public class Helpers {
 			ArrayList<DonateService> invInfo = new ArrayList<DonateService>(); 
 			try (Connection con = L2DatabaseFactory.getInstance().getConnection())
 			{
-				PreparedStatement statement = con.prepareStatement("SELECT serviceid,servicename,price FROM donateservices");
+				PreparedStatement statement = con.prepareStatement("SELECT serviceid,servicename,price FROM l2acp_donateservices");
 				ResultSet itemList = statement.executeQuery();
 				
 				while (itemList.next())// fills the package

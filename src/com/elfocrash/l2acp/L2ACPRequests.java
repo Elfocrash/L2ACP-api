@@ -50,8 +50,9 @@ public enum L2ACPRequests
 	SPAWNNPC(22, SpawnNpcRequest::new),
 	SETDONATELIST(23, SetDonateListRequest::new),
 	RESTARTSERVER(24, RestartServerRequest::new),
-	LUCKYWHEELSPINREQUEST(25, LuckyWheelSpinRequest::new),
-	LUCKYWHEELLISTREQUEST(26, LuckyWheelListRequest::new);
+	LUCKYWHEELSPIN(25, LuckyWheelSpinRequest::new),
+	LUCKYWHEELLIST(26, LuckyWheelListRequest::new),
+	GETANALYTICSPLAYERS(27, GetAnalyticsPlayersRequest::new);
 	
 	public static final L2ACPRequests[] REQUESTS;
 	

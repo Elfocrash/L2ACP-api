@@ -10,10 +10,12 @@ import java.util.stream.Collectors;
 
 import com.elfocrash.l2acp.crypto.AesCrypto;
 import com.elfocrash.l2acp.requests.L2ACPRequest;
+import com.elfocrash.l2acp.tasks.DatamineTask;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import net.sf.l2j.commons.concurrent.ThreadPool;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
@@ -41,6 +43,8 @@ public class L2ACPServer {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		ThreadPool.scheduleAtFixedRate(new DatamineTask(), 120000, 600000);
 	}
 	
 	class RequestHandler implements HttpHandler {

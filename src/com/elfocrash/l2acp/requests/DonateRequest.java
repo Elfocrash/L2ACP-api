@@ -21,7 +21,7 @@ public class DonateRequest extends L2ACPRequest {
 	public L2ACPResponse getResponse() {
 
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
-				PreparedStatement ps = con.prepareStatement("SELECT count(*) as Count FROM donations WHERE accountName=? and transactionid=? and verificationSign=?"))
+				PreparedStatement ps = con.prepareStatement("SELECT count(*) as Count FROM l2acp_donations WHERE accountName=? and transactionid=? and verificationSign=?"))
 		{
 			ps.setString(1, AccountName);
 			ps.setString(2, TransactionId);
@@ -43,7 +43,7 @@ public class DonateRequest extends L2ACPRequest {
 		}
 		
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
-				PreparedStatement ps = con.prepareStatement("insert into donations (accountName,amount,transactionid,verificationSign) values (?,?,?,?)"))
+				PreparedStatement ps = con.prepareStatement("insert into l2acp_donations (accountName,amount,transactionid,verificationSign) values (?,?,?,?)"))
 		{
 			ps.setString(1, AccountName);
 			ps.setInt(2, Amount);
