@@ -43,13 +43,13 @@ public class DonateRequest extends L2ACPRequest {
 		}
 		
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
-				PreparedStatement ps = con.prepareStatement("insert into l2acp_donations (accountName,amount,transactionid,verificationSign) values (?,?,?,?)"))
+				PreparedStatement ps = con.prepareStatement("insert into l2acp_donations (accountName,amount,transactionid,verificationSign,timestamp) values (?,?,?,?,?)"))
 		{
 			ps.setString(1, AccountName);
 			ps.setInt(2, Amount);
 			ps.setString(3, TransactionId);
 			ps.setString(4, VerificationSign);
-			
+			ps.setLong(5, System.currentTimeMillis());
 			ps.execute();
 		}
 		catch (SQLException e)
