@@ -24,6 +24,14 @@ public class RenamePlayerRequest extends L2ACPRequest {
 			return new L2ACPResponse(500, "Provided name is not valid.");
 		}
 		
+		if(Username.equals(NewName)){
+			return new L2ACPResponse(500, "That is already your name.");
+		}
+		
+		if(Helpers.getPlayerIdByName(NewName) != 0){
+			return new L2ACPResponse(500, "Than name belongs to someone else.");
+		}
+		
 		ArrayList<DonateService> services = Helpers.getDonateServices();
 		int price = 0;
 		for(DonateService service : services){
