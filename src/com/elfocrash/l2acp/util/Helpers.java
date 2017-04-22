@@ -62,6 +62,20 @@ public class Helpers {
 		}
 	}
 	
+	public static void addDonatePoints(String accountName, int price){
+		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
+				PreparedStatement ps = con.prepareStatement("update accounts set donatepoints=(donatepoints + ?) WHERE login=?"))
+		{
+			ps.setInt(1, price);
+			ps.setString(2, accountName);
+			ps.execute();
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
 	public static void deleteAllDonateItems(){
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
 				PreparedStatement ps = con.prepareStatement("delete from l2acp_donateitems"))

@@ -53,7 +53,8 @@ public enum L2ACPRequests
 	LUCKYWHEELSPIN(25, LuckyWheelSpinRequest::new),
 	LUCKYWHEELLIST(26, LuckyWheelListRequest::new),
 	GETANALYTICSPLAYERS(27, GetAnalyticsPlayersRequest::new),
-	GETBOSSMAPDATA(28, GetLiveRbsForMapRequest::new);
+	GETBOSSMAPDATA(28, GetLiveRbsForMapRequest::new),
+	GIVEDONATEPOINTS(29, GiveDonatePointsRequest::new);
 	
 	public static final L2ACPRequests[] REQUESTS;
 	
