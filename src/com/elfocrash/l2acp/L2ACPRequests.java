@@ -55,7 +55,11 @@ public enum L2ACPRequests
 	GETANALYTICSPLAYERS(27, GetAnalyticsPlayersRequest::new),
 	GETBOSSMAPDATA(28, GetLiveRbsForMapRequest::new),
 	GIVEDONATEPOINTS(29, GiveDonatePointsRequest::new),
-	SETPLAYERLEVEL(30, SetPlayerLevelRequest::new);
+	SETPLAYERLEVEL(30, SetPlayerLevelRequest::new),
+	GETBUYPRIVATESTOREITEMS(31, GetBuyPrivateStoreItemsRequest::new),
+	GETSELLPRIVATESTOREITEMS(32, GetSellPrivateStoreItemsRequest::new),
+	SELLPRIVATESTOREITEM(33, SellPrivateStoreItemRequest::new),
+	BUYPRIVATESTOREITEM(34, BuyPrivateStoreItemRequest::new);
 	
 	public static final L2ACPRequests[] REQUESTS;
 	
