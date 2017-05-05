@@ -40,11 +40,11 @@ public class RenamePlayerRequest extends L2ACPRequest {
 		}
 		
 		if(Username.equals(NewName)){
-			return new L2ACPResponse(500, "That is already your name.");
+			return new L2ACPResponse(501, "That is already your name.");
 		}
 		
 		if(Helpers.getPlayerIdByName(NewName) != 0){
-			return new L2ACPResponse(500, "Than name belongs to someone else.");
+			return new L2ACPResponse(502, "Than name belongs to someone else.");
 		}
 		
 		ArrayList<DonateService> services = Helpers.getDonateServices();
@@ -55,7 +55,7 @@ public class RenamePlayerRequest extends L2ACPRequest {
 		}		
 		
 		if(price < 0)
-			return new L2ACPResponse(500, "This service is disabled");
+			return new L2ACPResponse(503, "This service is disabled");
 		
 		L2PcInstance player = World.getInstance().getPlayer(Username);
 		if(player == null){
@@ -65,7 +65,7 @@ public class RenamePlayerRequest extends L2ACPRequest {
 		int donatePoints = Helpers.getDonatePoints(accName);
 		
 		if(donatePoints < price){
-			return new L2ACPResponse(500, "Not enough donate points.");
+			return new L2ACPResponse(504, "Not enough donate points.");
 		}
 		
 		Helpers.removeDonatePoints(accName, price);

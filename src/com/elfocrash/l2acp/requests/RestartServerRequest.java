@@ -39,7 +39,7 @@ public class RestartServerRequest extends L2ACPRequest {
 			return new L2ACPResponse(200, "Server is restarting...");
 		}
 		
-		return new L2ACPResponse(500, "Server is already restarting");
+		return new L2ACPResponse(500, "Server is already restarting!");
 	}
 	
 	

@@ -38,7 +38,7 @@ public class SetPlayerLevelRequest extends L2ACPRequest {
 			player = L2PcInstance.restore( Helpers.getPlayerIdByName(PlayerName));					
 		
 		if(player == null)
-			return new L2ACPResponse(500,"You tried something weird.");
+			return new L2ACPResponse(500,"Invalid request!");
 		
 		try
 		{
@@ -59,16 +59,16 @@ public class SetPlayerLevelRequest extends L2ACPRequest {
 			}
 			else
 			{
-				return new L2ACPResponse(500,"You must specify level between 1 and " + Experience.MAX_LEVEL + ".");
+				return new L2ACPResponse(501, String.valueOf(Experience.MAX_LEVEL));
 			}
 		}
 		catch (NumberFormatException e)
 		{
-			return new L2ACPResponse(500,"You must specify level between 1 and " + Experience.MAX_LEVEL + ".");
+			return new L2ACPResponse(501, String.valueOf(Experience.MAX_LEVEL));
 		}
 		
 		
-		return new L2ACPResponse(200,"Level set successfully given!");
+		return new L2ACPResponse(200,"Level set successfully!");
 		
 	}
 	

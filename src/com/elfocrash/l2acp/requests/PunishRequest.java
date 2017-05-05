@@ -46,31 +46,31 @@ public class PunishRequest extends L2ACPRequest {
 					LoginServerThread.getInstance().sendAccessLevel(PlayerName, -100);
 				}
 					
-				return new L2ACPResponse(200,"Successfully account banned.");
+				return new L2ACPResponse(201,"Account banned.");
 			case 2: // ban char
 					player.setPunishLevel(L2PcInstance.PunishLevel.CHAR, Time);
-				return new L2ACPResponse(200,"Successfully banned");
+				return new L2ACPResponse(202,"Character banned.");
 			case 3: // ban chat
 					player.setPunishLevel(L2PcInstance.PunishLevel.CHAT, Time);
-				return new L2ACPResponse(200,"Successfully chat banned.");
+				return new L2ACPResponse(203,"Character chat banned.");
 			case 4: // ban jail
 					player.setPunishLevel(L2PcInstance.PunishLevel.JAIL, Time);
-				return new L2ACPResponse(200,"Successfully jailed.");
+				return new L2ACPResponse(204,"Character jailed.");
 			case 5: // unban account
 					LoginServerThread.getInstance().sendAccessLevel(Helpers.getAccountName(player.getName()), 0);
-				return new L2ACPResponse(200,"Account unbanned.");
+				return new L2ACPResponse(205,"Account unbanned.");
 			case 6: // unban char
 				Helpers.changeCharAccessLevel(null, PlayerName, 0);
-				return new L2ACPResponse(200,"Character unbanned.");
+				return new L2ACPResponse(206,"Character unbanned.");
 			case 7: // unban chat
 				try{
 					if (player.isChatBanned())
 					{
 						player.setPunishLevel(L2PcInstance.PunishLevel.NONE, 0);
-						return new L2ACPResponse(200,"Chat ban has been lifted.");
+						return new L2ACPResponse(207,"Chat ban has been lifted.");
 					}
 					else
-						return new L2ACPResponse(500,"User isn't currently chat banned.");
+						return new L2ACPResponse(500,"Player isn't currently chat banned.");
 				}catch(Exception e){
 					Helpers.banChatOfflinePlayer(PlayerName, 0, false);
 				}
@@ -78,18 +78,18 @@ public class PunishRequest extends L2ACPRequest {
 				//break;
 			case 8:
 				player.setPunishLevel(L2PcInstance.PunishLevel.NONE, 0);
-				return new L2ACPResponse(200, "Character unjailed.");
+				return new L2ACPResponse(208, "Character unjailed.");
 			case 9:
 				if(player.isOnline())
 				{
 					player.logout();
-					return new L2ACPResponse(200, "Character kicked.");
+					return new L2ACPResponse(209, "Character kicked.");
 				}
-				return new L2ACPResponse(5000, "Character wasn't online.");
+				return new L2ACPResponse(501, "Character wasn't online.");
 				
 		}
 		
-		return new L2ACPResponse(200,"ok:Success");
+		return new L2ACPResponse(200,"Success");
 	}
 	
 	

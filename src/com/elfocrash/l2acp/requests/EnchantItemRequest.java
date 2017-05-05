@@ -37,7 +37,7 @@ public class EnchantItemRequest extends L2ACPRequest {
 	public L2ACPResponse getResponse() {
 		L2PcInstance player = World.getInstance().getPlayer(Username);
 		if(player == null){
-			player = L2PcInstance.restore(new Helpers().getPlayerIdByName(Username));					
+			player = L2PcInstance.restore(Helpers.getPlayerIdByName(Username));					
 		}
 		
 		ItemInstance item = player.getInventory().getItemByObjectId(ObjectId);

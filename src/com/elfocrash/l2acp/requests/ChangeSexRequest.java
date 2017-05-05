@@ -41,7 +41,7 @@ public class ChangeSexRequest extends L2ACPRequest {
 		}		
 
 		if(price < 0)
-			return new L2ACPResponse(500, "This service is disabled");
+			return new L2ACPResponse(501, "This service is disabled");
 		
 		L2PcInstance player = World.getInstance().getPlayer(Username);
 		if(player == null){

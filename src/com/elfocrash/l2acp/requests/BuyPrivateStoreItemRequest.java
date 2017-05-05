@@ -70,16 +70,16 @@ public class BuyPrivateStoreItemRequest extends L2ACPRequest
 			
 			
 			if (player.isCursedWeaponEquipped())
-				return new L2ACPResponse(500, "You can't do that while holding a cursed weapon.");
+				return new L2ACPResponse(501, "You can't do that while holding a cursed weapon.");
 			
 					
 			TradeList storeList = seller.getSellList();
 			if (storeList == null)
-				return new L2ACPResponse(500, "This player is not buying anything");
+				return new L2ACPResponse(502, "This player is not buying anything");
 			
 			if (!player.getAccessLevel().allowTransaction())
 			{
-				return new L2ACPResponse(500, "You are not authorized to do that.");
+				return new L2ACPResponse(503, "You are not authorized to do that.");
 			}
 			
 			Set<ItemRequest> _items = new HashSet<>();
@@ -101,7 +101,7 @@ public class BuyPrivateStoreItemRequest extends L2ACPRequest
 		
 			int result = storeList.privateStoreBuy(player, _items);
 			if(result > 0)
-				return new L2ACPResponse(500, "You don't have the items required.");
+				return new L2ACPResponse(504, "You don't have the items required.");
 			
 			if(flag)
 				player.setOnlineStatus(false, false);

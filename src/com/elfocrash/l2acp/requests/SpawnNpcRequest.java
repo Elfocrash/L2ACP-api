@@ -39,7 +39,7 @@ public class SpawnNpcRequest extends L2ACPRequest {
 		int z = GeoEngine.getInstance().getHeightNearest(geoX, geoY, 0);
 		Helpers.spawn(NpcId, X, Y, z, 0, false);
 		NpcTemplate npc = NpcTable.getInstance().getTemplate(NpcId);
-		return new L2ACPResponse(200,"Successfully spawned " + npc.getName() + "!");
+		return new L2ACPResponse(200,npc.getName());
 	}
 	
 	

@@ -35,7 +35,7 @@ public class GiveDonatePointsRequest extends L2ACPRequest {
 			
 			return new L2ACPResponse(200,"Donate points given!");
 		}
-		return new L2ACPResponse(500,"You tried something weird.");
+		return new L2ACPResponse(500,"Invalid request!");
 	}
 	
 	

@@ -50,11 +50,11 @@ public class ResetPkRequest extends L2ACPRequest {
 		int donatePoints = Helpers.getDonatePoints(accName);
 		
 		if(donatePoints < price){
-			return new L2ACPResponse(500, "Not enough donate points.");
+			return new L2ACPResponse(501, "Not enough donate points.");
 		}
 		
 		if(player.getPkKills() == 0){
-			return new L2ACPResponse(500, "Your PKs are already zero.");
+			return new L2ACPResponse(502, "Your PKs are already zero.");
 		}
 		
 		Helpers.removeDonatePoints(accName, price);
@@ -63,7 +63,7 @@ public class ResetPkRequest extends L2ACPRequest {
 		player.broadcastUserInfo();
 		player.store();
 		
-		return new L2ACPResponse(200, "Successfully cleared the PKs");
+		return new L2ACPResponse(200, "Successfully cleared the PKs.");
 	}
 
 	@Override

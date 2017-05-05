@@ -77,7 +77,7 @@ public class BuyItemRequest extends L2ACPRequest
 			Helpers.removeDonatePoints(AccountName, Price);
 			return new L2ACPResponse(200, "Success");
 		}	
-		return new L2ACPResponse(500, "Not enough donate points");
+		return new L2ACPResponse(501, "Not enough donate points");
 	}
 	
 	@Override
