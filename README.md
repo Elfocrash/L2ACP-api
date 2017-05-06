@@ -12,5 +12,3 @@ This is the gameserver API project for L2ACP
 * You need to add `L2ACPServer.getInstance();` at the end of your Gameserver.java
 * I export the src as a jar file with eclipse because I'm lazy and i drop in in the lib folder of l2j.
 * Start the gameserver and you should be up and running.
-
-(To be edited)
